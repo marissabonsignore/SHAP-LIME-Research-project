@@ -13,13 +13,8 @@ print("=== SCRIPT STARTED ===")
 df = pd.read_csv(INPUT_FILE)
 print(f"Loaded rows: {len(df)}")
 
-# -----------------------------
-# REQUIRED BLACK–SCHOLES INPUTS
-# -----------------------------
-
 df["S"] = pd.to_numeric(df["Mid Price"], errors="coerce")
 
-# ✅ STRIKE IS STORED HERE (misnamed column)
 df["K"] = pd.to_numeric(df["Open Interest"], errors="coerce")
 
 df["T"] = DEFAULT_T
@@ -28,9 +23,6 @@ df["Implied Volatility"] = pd.to_numeric(df["Implied Volatility"], errors="coerc
 print("\nNon-null counts:")
 print(df[["S", "K", "T", "Implied Volatility"]].notna().sum())
 
-# -----------------------------
-# BLACK–SCHOLES FUNCTIONS
-# -----------------------------
 def d1(S, K, T, r, sigma):
     return (np.log(S / K) + (r + 0.5 * sigma**2) * T) / (sigma * np.sqrt(T))
 
@@ -43,9 +35,6 @@ def gamma(S, K, T, r, sigma):
 def vega(S, K, T, r, sigma):
     return S * norm.pdf(d1(S, K, T, r, sigma)) * np.sqrt(T)
 
-# -----------------------------
-# COMPUTE GREEKS
-# -----------------------------
 mask = (
     (df["S"] > 0) &
     (df["K"] > 0) &

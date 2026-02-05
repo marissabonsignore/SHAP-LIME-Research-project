@@ -1,11 +1,7 @@
 import pandas as pd
 
-# --------------------------------------------------
-# LOAD FEATURE-ENGINEERED DATA
-# --------------------------------------------------
 df = pd.read_csv("data/filtered_spx_options_with_features.csv")
 
-# Ensure time ordering
 df["Trade Date"] = pd.to_datetime(df["Trade Date"])
 df = df.sort_values("Trade Date").reset_index(drop=True)
 
@@ -13,9 +9,6 @@ print("Total observations:", len(df))
 print("\nColumns in dataset:")
 print(df.columns.tolist())
 
-# --------------------------------------------------
-# DEFINE TARGET AND FEATURES (COMMON TO ALL MODELS)
-# --------------------------------------------------
 FEATURES = [
     "Log_Moneyness",
     "Time_to_Maturity",
@@ -36,9 +29,6 @@ print(X.head())
 print("\nTarget sample:")
 print(y.head())
 
-# --------------------------------------------------
-# TIME-ORDERED TRAIN / VALIDATION / TEST SPLIT
-# --------------------------------------------------
 n = len(df)
 
 train_end = int(0.70 * n)

@@ -12,7 +12,7 @@ df_list = []
 
 for file in csv_files:
     df = pd.read_csv(file)
-    df["source_file"] = os.path.basename(file)  # optional: track origin
+    df["source_file"] = os.path.basename(file) 
     df_list.append(df)
 
 merged_df = pd.concat(df_list, ignore_index=True)
